@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم التبرعات - GoFundMe</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f9fc;
+      padding: 20px;
+      direction: rtl;
+    }
+    .dashboard {
+      max-width: 1000px;
+      margin: auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .chart-container {
+      margin-bottom: 40px;
+    }
+    .conversion-rate-box, .average-donation-box {
+      background-color: #ecf0f1;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 20px;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <h2>لوحة تحكم تبرعات GoFundMe</h2>
+
+    <div class="chart-container">
+      <canvas id="trafficSourcesChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="donationsOverTime"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="topCountriesChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="donorsAverageChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="conversionRateChart"></canvas>
+    </div>
+
+    <div class="conversion-rate-box">
+      <strong>معدل التحويل العام:</strong>
+      <span id="overallConversionRate">--%</span>
+    </div>
+
+    <div class="average-donation-box">
+      <strong>متوسط مبلغ التبرع:</strong>
+      <span id="averageDonation">--$</span>
+    </div>
+  </div>
+
+  <script>
+    const visitors = 750;
+    const donors = 145;
+    const totalDonations = 6890;
+
+    const overallConversionRate = ((donors / visitors) * 100).toFixed(2);
+    const averageDonation = (totalDonations / donors).toFixed(2);
+
+    document.getElementById("overallConversionRate").innerText = overallConversionRate + "%";
+    document.getElementById("averageDonation").innerText = averageDonation + "$";
+
+    new Chart(document.getElementById('trafficSourcesChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['2025-04-01', '2025-04-02', '2025-04-03', '2025-04-04', '2025-04-05'],
+        datasets: [{
+          label: 'عدد الزوار',
+          data: [320, 210, 70, 60, 90],
+          backgroundColor: '#3b5998'
+        }]
+      }
+    });
+
+    new Chart(document.getElementById('donationsOverTime').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: ['2025-04-01', '2025-04-02', '2025-04-03', '2025-04-04', '2025-04-05'],
+        datasets: [{
+          label: 'قيمة التبرعات ($)',
+          data: [100, 250, 150, 300, 510],
+          backgroundColor: 'rgba(46, 204, 113, 0.2)',
+          borderColor: '#27ae60',
+          borderWidth: 2,
+          fill: true
+        }]
+      }
+    });
+
+    new Chart(document.getElementById('topCountriesChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['فلسطين', 'السعودية', 'الولايات المتحدة', 'الأردن', 'الإمارات'],
+        datasets: [{
+          label: 'عدد التبرعات',
+          data: [130, 90, 70, 60, 50],
+          backgroundColor: '#3498db'
+        }]
+      }
+    });
+
+    new Chart(document.getElementById('donorsAverageChart').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: ['2025-04-01', '2025-04-02', '2025-04-03', '2025-04-04', '2025-04-05'],
+        datasets: [{
+          label: 'متوسط التبرع ($)',
+          data: [85, 90, 95, 85, 100],
+          backgroundColor: 'rgba(155, 89, 182, 0.2)',
+          borderColor: '#9b59b6',
+          borderWidth: 2,
+          fill: true
+        }]
+      }
+    });
+
+    new Chart(document.getElementById('conversionRateChart').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: ['2025-04-01', '2025-04-02', '2025-04-03', '2025-04-04', '2025-04-05'],
+        datasets: [{
+          label: 'معدل التحويل (%)',
+          data: [3.4, 5.1, 1.2, 8.3, 2.9],
+          backgroundColor: 'rgba(243, 156, 18, 0.2)',
+          borderColor: '#f39c12',
+          borderWidth: 2,
+          fill: true
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 10
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
